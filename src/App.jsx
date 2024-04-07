@@ -1,9 +1,9 @@
 import React, { useReducer } from "react";
 import players from "../data/players";
+import { BiSearch } from "react-icons/bi";
 
 const initailState = {
     users: players,
-    search: [],
 };
 
 const reducer = (state, action) => {
@@ -49,23 +49,34 @@ const App = () => {
 
     return (
         <div className="max-w-[1280px] mx-auto px-10">
-            <div className="border-b border-gray-300 sticky top-0 left-0 bg-[#E8E8E8] z-50 mb-10 pt-10">
-                <input type="text" className="border" onChange={handleChange} />
+            <div className="border-b border-gray-300 sticky top-0 left-0 bg-[#E8E8E8] z-50 mb-10 flex lg:flex-row md:flex-row sm:flex-col flex-col gap-3 justify-between py-7">
                 {state.users.length !== 0 ? (
                     <button
-                        className="bg-red-700 text-white lg:py-2 md:py-2 sm:py-3 py-3 lg:px-5 md:px-5 sm:px-7 px-7 rounded-md mb-7"
+                        className="bg-red-700 text-white lg:py-2 md:py-2 sm:py-3 py-3 lg:px-5 md:px-5 sm:px-7 px-7 rounded-md"
                         onClick={removeAll}
                     >
                         Remove All
                     </button>
                 ) : (
                     <button
-                        className="bg-gray-500 text-white lg:py-2 md:py-2 sm:py-3 py-3 lg:px-5 md:px-5 sm:px-7 px-7 rounded-md mb-7"
+                        className="bg-gray-500 text-white lg:py-2 md:py-2 sm:py-3 py-3 lg:px-5 md:px-5 sm:px-7 px-7 rounded-md"
                         onClick={resetAll}
                     >
                         Reset All
                     </button>
                 )}
+                <div className="relative">
+                    <input
+                        type="text"
+                        className="a rounded-xl outline-gray-400 pl-10 pr-4 py-2 lg:w-auto md:w-auto sm:w-full w-full"
+                        onChange={handleChange}
+                        placeholder="Search players..."
+                    />
+                    <BiSearch
+                        className="absolute top-0 left-0 mt-3 ml-3 text-gray-500"
+                        size={20}
+                    />
+                </div>
             </div>
             <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5 mb-10">
                 {state.users.length !== 0 ? (
