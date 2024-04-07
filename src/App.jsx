@@ -3,6 +3,7 @@ import players from "../data/players";
 
 const initailState = {
     users: players,
+    search: [],
 };
 
 const reducer = (state, action) => {
@@ -16,9 +17,16 @@ const reducer = (state, action) => {
         const removePlayer = state.users.filter(
             (user) => user.id !== action.payload.id
         );
-
         return { ...state, users: removePlayer };
     }
+    if (action.type === "SEARCH") {
+        const searchValue = action.payload.value.toLowerCase();
+        const searchResults = players.filter((player) =>
+            player.name.toLowerCase().includes(searchValue)
+        );
+        return { ...state, users: searchResults };
+    }
+    return state;
 };
 
 const App = () => {
@@ -35,10 +43,14 @@ const App = () => {
     const remove = (id) => {
         dispatch({ type: "REMOVE", payload: { id } });
     };
+    const handleChange = (e) => {
+        dispatch({ type: "SEARCH", payload: { value: e.target.value } });
+    };
 
     return (
         <div className="max-w-[1280px] mx-auto px-10">
             <div className="border-b border-gray-300 sticky top-0 left-0 bg-[#E8E8E8] z-50 mb-10 pt-10">
+                <input type="text" className="border" onChange={handleChange} />
                 {state.users.length !== 0 ? (
                     <button
                         className="bg-red-700 text-white lg:py-2 md:py-2 sm:py-3 py-3 lg:px-5 md:px-5 sm:px-7 px-7 rounded-md mb-7"
